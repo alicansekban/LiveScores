@@ -28,7 +28,8 @@ class MatchesRepository @Inject constructor(
                 }
 
                 is ResultWrapper.Success -> {
-                    val response = apiData.value.data
+                    // burada gelen veriyi önce favori olup olmadığı ile ilgili kontrol edip daha sonra local db'ye ekliyoruz.
+                    val response = apiData.value.data.filter { it.sc?.abbr == "Bitti" }
                     val entityList = response.map {
                         val favoriteMatch = localDataSource.getFavoriteMatch(it.i ?: 0)
                         val isFavorite = favoriteMatch != null
@@ -38,7 +39,7 @@ class MatchesRepository @Inject constructor(
 
                 }
             }
-            // offline first mantığı ile veriyi sadece db'den çekip domain katmanına gönderiyoruz.
+            // işlem sonucunda veriyi lokal db'den çekiyoruz.
 
             emit(ResultWrapper.Success(localDataSource.getMatches()))
         }

@@ -11,7 +11,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -24,6 +26,14 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+    }
+
+    @Provides
+    @Singleton
     fun provideOkHttp(
         loggingInterceptor: HttpLoggingInterceptor,
     ): okhttp3.Call.Factory {
@@ -32,8 +42,20 @@ object AppModule {
             .callTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
+            .addInterceptor(providesOkhttpInterceptor())
             .addInterceptor(loggingInterceptor)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun providesOkhttpInterceptor(): Interceptor {
+        return Interceptor { chain: Interceptor.Chain ->
+            val original: Request = chain.request()
+            val requestBuilder: Request.Builder = original.newBuilder()
+            val request: Request = requestBuilder.build()
+            chain.proceed(request)
+        }
     }
 
     @Provides
