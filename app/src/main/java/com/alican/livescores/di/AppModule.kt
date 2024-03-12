@@ -25,14 +25,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-
-    @Provides
-    @Singleton
-    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
-    }
     @Provides
     @Singleton
     fun provideOkHttp(
@@ -43,21 +35,8 @@ object AppModule {
             .callTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
-            .addInterceptor(providesOkhttpInterceptor())
             .addInterceptor(loggingInterceptor)
             .build()
-    }
-    @Provides
-    @Singleton
-    fun providesOkhttpInterceptor(): Interceptor {
-        return Interceptor { chain: Interceptor.Chain ->
-            val original: Request = chain.request()
-            val requestBuilder: Request.Builder = original.newBuilder()
-                .addHeader("accept", "application/json")
-                .header("Authorization", "Bearer ${Constant.TOKEN}")
-            val request: Request = requestBuilder.build()
-            chain.proceed(request)
-        }
     }
 
     @Provides
