@@ -5,8 +5,8 @@ import com.alican.livescores.domain.ui_models.MatchUIModel
 sealed class MatchesScreenUIEvents {
     data class AddToFavorite(val isFavorite: Boolean, val match: MatchUIModel) :
         MatchesScreenUIEvents()
-
     data object ResetFavoriteState : MatchesScreenUIEvents()
+    data object SendRequestAgain : MatchesScreenUIEvents()
 }
 
 data class MatchesScreenUIModel(

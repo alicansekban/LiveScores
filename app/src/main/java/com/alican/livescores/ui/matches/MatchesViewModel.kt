@@ -47,6 +47,7 @@ class MatchesViewModel @Inject constructor(
     }
 
     fun updateUIEvents(event: MatchesScreenUIEvents) {
+        // ui da yapılan değişiklikleri bu method aracılığı ile ViewModel'a paslayıp burada yönetiyoruz.
         when (event) {
             is MatchesScreenUIEvents.AddToFavorite -> {
                 handleFavoriteClick(event.isFavorite, event.match)
@@ -54,6 +55,10 @@ class MatchesViewModel @Inject constructor(
 
             MatchesScreenUIEvents.ResetFavoriteState -> {
                 _favoriteState.value = Default()
+            }
+
+            MatchesScreenUIEvents.SendRequestAgain -> {
+                getMatches()
             }
         }
     }
@@ -75,6 +80,7 @@ class MatchesViewModel @Inject constructor(
     private fun getMatches() {
         viewModelScope.launch(Dispatchers.IO) {
             matchesUseCase().collect { state ->
+                //use case'den dönen sonuca göre uiState üzerinde güncellemelerimizi yapıyoruz.
                 when (state) {
                     is Default -> {}
                     is Empty -> {

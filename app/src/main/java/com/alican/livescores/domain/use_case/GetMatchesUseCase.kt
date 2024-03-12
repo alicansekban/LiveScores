@@ -37,6 +37,7 @@ class GetMatchesUseCase @Inject constructor(
                     }
 
                     is ResultWrapper.Success -> {
+                        // gelen sonucun dolu ya da boş olduğunu kontrol edip ona göre ui'a sonuç aktarıyoruz.
                         if (data.value.isEmpty()) {
                             emit(Empty())
                         } else {

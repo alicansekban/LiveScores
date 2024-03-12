@@ -29,10 +29,11 @@ class MatchesRepository @Inject constructor(
                 }
 
                 is ResultWrapper.Success -> {
-                    // burada gelen veriyi önce favori olup olmadığı ile ilgili kontrol edip daha sonra local db'ye ekliyoruz.
+                    // burada gelen veriyi filtreleyip sadece göstermek istediğimiz, yani sonuçlanmış maçları gösteriyoruz.
                     val response = apiData.value.data.filter { it.sc?.abbr == "Bitti" }
                         .sortedByDescending { it.d }
                     val entityList = response.map {
+                        // map işlemi yapılacak elemanın favori olup olmadığı bilgisini burada kontrol ediyoruz ve ona göre mapper'a paslıyoruz.
                         val favoriteMatch = localDataSource.getFavoriteMatch(it.i ?: 0)
                         val isFavorite = favoriteMatch != null
                         it.toEntity(isFavorite)

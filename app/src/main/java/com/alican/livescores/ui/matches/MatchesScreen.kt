@@ -79,6 +79,15 @@ fun MatchesScreen(
         }
     }
     if (uiStates.isError) {
+        // olası hata durumunda hata mesajını basıp tekrar istek atılabilir bir akış yapıyoruz.
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(
+                text = "Tekrar Dene",
+                style = MaterialTheme.typography.labelLarge,
+                modifier = Modifier.clickable {
+                    viewModel.updateUIEvents(MatchesScreenUIEvents.SendRequestAgain)
+                })
+        }
         Toast.makeText(context, uiStates.errorMessage, Toast.LENGTH_SHORT).show()
     }
     if (uiStates.isSuccess) {
