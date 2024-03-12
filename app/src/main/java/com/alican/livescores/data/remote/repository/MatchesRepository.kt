@@ -1,5 +1,6 @@
 package com.alican.livescores.data.remote.repository
 
+import com.alican.livescores.data.local.entity.FavoriteMatchEntity
 import com.alican.livescores.data.local.entity.MatchEntity
 import com.alican.livescores.data.remote.dataSource.MatchesLocalDataSource
 import com.alican.livescores.data.remote.dataSource.MatchesRemoteDataSource
@@ -43,5 +44,13 @@ class MatchesRepository @Inject constructor(
 
             emit(ResultWrapper.Success(localDataSource.getMatches()))
         }
+    }
+
+    suspend fun insertFavoriteMatch(match: FavoriteMatchEntity): ResultWrapper<Any> {
+        return localDataSource.addToFavorite(match)
+    }
+
+    fun removeFavoriteMatch(id: Int): ResultWrapper<Any> {
+        return localDataSource.removeFromFavorite(id)
     }
 }
