@@ -2,9 +2,8 @@ package com.alican.livescores.di
 
 import android.content.Context
 import androidx.room.Room
-import com.alican.livescores.data.local.AppDatabase
+import com.alican.livescores.data.local.MatchDatabase
 import com.alican.livescores.data.remote.webservice.WebService
-import com.alican.livescores.utils.Constant
 import com.alican.livescores.utils.Constant.BASE_URL
 import com.alican.livescores.utils.Constant.ROOM_DATA_BASE_NAME
 import dagger.Module
@@ -12,9 +11,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -52,8 +49,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideStockDatabase(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(context, AppDatabase::class.java, ROOM_DATA_BASE_NAME)
+    fun provideStockDatabase(@ApplicationContext context: Context): MatchDatabase {
+        return Room.databaseBuilder(context, MatchDatabase::class.java, ROOM_DATA_BASE_NAME)
             .fallbackToDestructiveMigration()
             .build()
     }
