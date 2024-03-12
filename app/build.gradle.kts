@@ -73,8 +73,6 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    implementation("com.canopas.intro-showcase-view:introshowcaseview:2.0.1")
-
 
     implementation(platform("androidx.compose:compose-bom:2023.04.01"))
 
@@ -90,30 +88,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
 
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
-
-
-    // firebase
-
-    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-database")
-
-
-    implementation ("com.google.firebase:firebase-messaging")
-
-    // google map
-
-    implementation ("com.google.maps.android:maps-compose:4.3.0")
-    implementation ("com.google.maps.android:maps-compose-utils:4.0.0")
-
-    // ads
-
-    //   implementation ("com.google.android.gms:play-services-ads:22.0.0")
-
-    // google review
-
-    implementation("com.google.android.play:review-ktx:2.0.1")
-    implementation("com.google.android.play:review:2.0.1")
 
     // splash
     implementation("androidx.core:core-splashscreen:1.0.1")
@@ -148,8 +122,6 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
 
 
-    // Generic Utils
-    implementation("com.blankj:utilcodex:1.30.6")
 
     implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
 

@@ -1,4 +1,4 @@
-package com.alican.livescores.ui.theme
+package com.alican.livescores.utils.theme
 
 import androidx.compose.ui.graphics.Color
 

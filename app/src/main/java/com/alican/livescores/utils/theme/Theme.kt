@@ -1,4 +1,4 @@
-package com.alican.livescores.ui.theme
+package com.alican.livescores.utils.theme
 
 import android.app.Activity
 import android.os.Build

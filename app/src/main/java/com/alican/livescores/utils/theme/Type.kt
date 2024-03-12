@@ -1,4 +1,4 @@
-package com.alican.livescores.ui.theme
+package com.alican.livescores.utils.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
