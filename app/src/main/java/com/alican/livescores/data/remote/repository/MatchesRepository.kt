@@ -31,19 +31,24 @@ class MatchesRepository @Inject constructor(
                 is ResultWrapper.Success -> {
                     // burada gelen veriyi önce favori olup olmadığı ile ilgili kontrol edip daha sonra local db'ye ekliyoruz.
                     val response = apiData.value.data.filter { it.sc?.abbr == "Bitti" }
+                        .sortedByDescending { it.d }
                     val entityList = response.map {
                         val favoriteMatch = localDataSource.getFavoriteMatch(it.i ?: 0)
                         val isFavorite = favoriteMatch != null
                         it.toEntity(isFavorite)
                     }
                     localDataSource.insertMatches(entityList)
+                    // işlem sonucunda veriyi lokal db'den çekiyoruz. bunun sebebi detay ekranına giderken veriyi lokal db üzerinden çekeceğiz. çünkü compose'da navigation yaparken data class paslamak şuan official destekli değil.
+                    emit(ResultWrapper.Success(localDataSource.getMatches()))
 
                 }
             }
-            // işlem sonucunda veriyi lokal db'den çekiyoruz.
 
-            emit(ResultWrapper.Success(localDataSource.getMatches()))
         }
+    }
+
+    fun getMatchDetail(id: Int): ResultWrapper<MatchEntity> {
+        return localDataSource.getMatch(id)
     }
 
     suspend fun insertFavoriteMatch(match: FavoriteMatchEntity): ResultWrapper<Any> {

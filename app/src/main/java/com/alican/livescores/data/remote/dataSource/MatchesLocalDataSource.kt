@@ -15,6 +15,14 @@ class MatchesLocalDataSource @Inject constructor(
 
 
     fun getMatches(): List<MatchEntity> = db.matchDao().getMatches()
+    fun getMatch(id: Int): ResultWrapper<MatchEntity> {
+        return try {
+            ResultWrapper.Loading
+            ResultWrapper.Success(db.matchDao().getMatch(id))
+        } catch (e: Exception) {
+            ResultWrapper.GenericError(error = e.message)
+        }
+    }
 
 
     suspend fun addToFavorite(match: FavoriteMatchEntity): ResultWrapper<Any> {

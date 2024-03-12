@@ -43,7 +43,11 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = ScreenRoutes.MATCHES_SCREEN
                         ) {
-                            MatchesScreen()
+                            MatchesScreen(
+                                openMatchDetail = { route ->
+                                    navController.navigate(route)
+                                }
+                            )
                         }
                         composable(
                             route = ScreenRoutes.MATCH_DETAIL_SCREEN,
