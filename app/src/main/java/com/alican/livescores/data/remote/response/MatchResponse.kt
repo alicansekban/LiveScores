@@ -48,7 +48,7 @@ data class MatchResponseModel(
 	val ht: Ht? = null
 ) : Parcelable {
 	fun getMatchScore(): String {
-		return "${sc?.ht?.r} - ${sc?.at?.r}"
+		return "${sc?.ht?.r ?: " "} - ${sc?.at?.r ?: " "}"
 	}
 }
 

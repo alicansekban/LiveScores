@@ -138,7 +138,7 @@ fun MatchCategoryComponent(
     Column(
         Modifier
             .fillMaxWidth()
-            .padding(bottom = 16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)
+            .padding(bottom = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Row(
             Modifier
