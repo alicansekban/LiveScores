@@ -15,6 +15,7 @@ class MatchesLocalDataSource @Inject constructor(
 
 
     fun getMatches(): List<MatchEntity> = db.matchDao().getMatches()
+    fun deleteMatches() = db.matchDao().deleteMatches()
     fun getMatch(id: Int): ResultWrapper<MatchEntity> {
         return try {
             ResultWrapper.Loading

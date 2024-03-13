@@ -14,7 +14,7 @@ class MatchesRepository @Inject constructor(
     private val remoteDataSource: MatchesRemoteDataSource,
     private val localDataSource: MatchesLocalDataSource
 ) {
-    suspend fun getMatches(): Flow<ResultWrapper<List<MatchEntity>>> {
+    fun getMatches(): Flow<ResultWrapper<List<MatchEntity>>> {
         return flow {
 
             emit(ResultWrapper.Loading)
@@ -30,7 +30,8 @@ class MatchesRepository @Inject constructor(
 
                 is ResultWrapper.Success -> {
                     // burada gelen veriyi filtreleyip sadece göstermek istediğimiz, yani sonuçlanmış maçları gösteriyoruz.
-                    val response = apiData.value.data.filter { it.sc?.abbr == "Bitti" }
+                    val response =
+                        apiData.value.data.filter { it.sc?.abbr == "Bitti" || it.sc?.abbr == "MS" }
                         .sortedByDescending { it.d }
                     val entityList = response.map {
                         // map işlemi yapılacak elemanın favori olup olmadığı bilgisini burada kontrol ediyoruz ve ona göre mapper'a paslıyoruz.
@@ -38,6 +39,7 @@ class MatchesRepository @Inject constructor(
                         val isFavorite = favoriteMatch != null
                         it.toEntity(isFavorite)
                     }
+                    localDataSource.deleteMatches()
                     localDataSource.insertMatches(entityList)
                     // işlem sonucunda veriyi lokal db'den çekiyoruz. bunun sebebi detay ekranına giderken veriyi lokal db üzerinden çekeceğiz. çünkü compose'da navigation yaparken data class paslamak şuan official destekli değil.
                     emit(ResultWrapper.Success(localDataSource.getMatches()))
