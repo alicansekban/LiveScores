@@ -43,7 +43,6 @@ object AppModule {
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
             .addInterceptor(providesOkhttpInterceptor())
-            .addInterceptor(loggingInterceptor)
             .build()
     }
 
